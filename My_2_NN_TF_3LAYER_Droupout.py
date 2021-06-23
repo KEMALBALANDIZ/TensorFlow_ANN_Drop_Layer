@@ -2,7 +2,7 @@
 """
 Created on Tue Dec 11 14:18:16 2018
 
-@author: mbgpwkb3
+@author: kemal
 """
 
 # # Implementing a deep neural network using tensorflow
@@ -20,23 +20,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
 from sklearn.model_selection import cross_val_score
-#import scipy
-#import scipy.io as sio
 
-#from sklearn.preprocessing import StandardScaler
-#from sklearn.naive_bayes import GaussianNB
-#from sklearn import metrics
-##import matplotlib.pyplot as plt
-#from sklearn.pipeline import make_pipeline
-#from mpl_toolkits.mplot3d import Axes3D
-#from sklearn import decomposition
-#from sklearn.metrics import classification_report
 
 
 py3nvml.grab_gpus(num_gpus=1, gpu_select=[0])
 
-target=pd.read_csv(r'C:\PhD\DB of Module\Hepsi\Object_Grasp_Horizontal\RMS125_Target.csv', header=None, sep=',')
-features=pd.read_csv(r'C:\PhD\DB of Module\Alvaro\Trial three (dynamic arm)\Objects\YIRMI\EX_2\MAV125.csv', header=None, sep=',')
+target=pd.read_csv(r'C:\PhD\.csv', header=None, sep=',')
+features=pd.read_csv(r'C:\PhD\DB of Module\Alvaro.csv', header=None, sep=',')
 
 target=target.dropna(axis=1,how="all") # drops the empty line at file-end
 features=features.dropna(axis=1, how="all") # drops the empty line at file-end
@@ -48,8 +38,7 @@ X_train_orig, X_test_orig, Y_train_orig, Y_test_orig = train_test_split(features
 
 #%%  
 #Load the emg data
-#X_orig = (np.array((features))).T
-#Y_orig = (np.array((target))).T
+
 
 X_train_orig=X_train_orig.T
 X_test_orig=X_test_orig.T
@@ -64,10 +53,6 @@ X_test_orig = X_test_orig/np.amax(X_test_orig)
 Y_train_orig=Y_train_orig.T
 Y_test_orig=Y_test_orig.T
   
-#Y_train_orig = Y_orig[:,0:int(0.7*Y_orig.shape[1])]
-#Y_test_orig = Y_orig[:,int(0.7*Y_orig.shape[1])+1::]
-   
-
 
 # ## 4. Couple of functions that are needed for the implementation, and do not need much explaining
 #%%
@@ -481,7 +466,7 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate,
 
 
 
-#X_train_orig, Y_train_orig, X_test_orig, Y_test_orig = load_dataset("PreProccessed/FewerCombinedFunctionalMyo/", NoZero = True)
+
 
 # ##Convert all the labels to one-hot vector and flatten the EMG values AND SAY HOW MANY CLASSES SUPER IMPORTANT
 no_of_classes = int(np.max(Y_train_orig)+1)
@@ -559,153 +544,3 @@ with tf.Session() as sess:
 #target=pd.read_csv(r'C:\PhD\DB of Module\Finger Random\EX_1\RMS_Target.csv', header=None, sep=',')
 #target2=pd.read_csv(r'C:\PhD\DB of Module\Finger Random\EX_5\Copy.csv', header=None, sep=',')
 
-#target=target.dropna(axis=1,how="all") # drops the empty line at file-end
-#target2=target2.dropna(axis=1, how="all") # drops the empty line at file-end
-
-#target = target.iloc[:, 0].values
-#target2 = target2.iloc[:, :].values
-
-#X_train_orig, X_test_orig, Y_train_orig, Y_test_orig = train_test_split(features, target, test_size = 0.30, random_state = None)
-
-#%%  
-#Load the emg data
-#X_orig = (np.array((features))).T
-#Y_orig = (np.array((target))).T
-
-#X_train_orig=X_train_orig.T
-#target2=target2.T
-
-
-    #Flatten the EMG data
-#X_train_orig = X_train_orig/np.amax(X_train_orig)
-#target2 = target2/np.amax(target2)    
-#target2=[[0.00000925,	0.000023,	0.0000217,	0.0000198,	0.0000186,	0.00000408,	0.0000209]].T
-
-#target2=target2.dropna(axis=1,how="all") # drops the empty line at file-end
-#features=features.dropna(axis=1, how="all") # drops the empty line at file-end
-
-#target2 = target2.iloc[:,:].values
-#features = features.iloc[:, :].values
-
-#Z3_test2 = forward_propagation_with_numpy(target2, parameters)
-
-#a = tf.placeholder(tf.float32,shape = [target2.shape[1],])
-#b = tf.placeholder(tf.float32,shape = [target2.shape[1],])
-
-#c = tf.confusion_matrix(labels = a, predictions = b)
-
-#with tf.Session() as sess:
-   # confusion_matrix = c.eval(feed_dict={a:sess.run(tf.argmax(Y_test)),b:sess.run(tf.argmax(Z3_test2))})
-    
-    
-  #  print("\n The confusion matrix for test data is:\n")
-    
-   # print('\n', confusion_matrix)
-    
-  #  print('\n', confusion_matrix.diagonal())
-   # 
-  #  print('\n', np.sum(confusion_matrix, axis = 1))
-   # 
-   # print('\n', np.true_divide(confusion_matrix.diagonal(), np.sum(confusion_matrix, axis = 1)))
-    
-
-
-
-
-
-######################################
-    
-"""
-a=[[0.00000925,	0.000023,	0.0000217,	0.0000198,	0.0000186,	0.00000408,	0.0000209]]
-#a = a.iloc[:, 0].values
-size = 100
-batches_generator = (a[i:i + size] for i in range(0, len(a), size))
-predictions = []
-y_pred_digits = tf.argmax(Y_test,1)
-for test_batch in batches_generator:
-    predictions.extend(y_pred_digits.eval(feed_dict={X_test:test_batch}))
-    #
-with tf.Session() as sess:
-    a=[[0.00000925,	0.000023,	0.0000217,	0.0000198,	0.0000186,	0.00000408,	0.0000209]]
-    a = a.iloc[:, 0].values
-    sess.run(tf.local_variables_initializer())
-    sess.run(a)
-#***********************************************#
-"""  
-#%%
-"""
-with tf.Session() as sess:   
-    Xnew = ([[0.00000925,	0.000023,	0.0000217,	0.0000198,	0.0000186,	0.00000408,	0.0000209]])
-# make a prediction
-    ynew = model.predict_proba(Xnew)
-# show the inputs and predicted outputs
-    print("X=%s, Predicted=%s" % (Xnew[0], ynew[0]))
-   
-"""
-#%%
-
-"""
-predict_dataset = tf.convert_to_tensor([
-    [0.00000925,	0.000023,	0.0000217,	0.0000198,	0.0000186,	0.00000408,	0.0000209]])#,
-
-    [5.9, 3.0, 4.2, 1.5,],
-    [6.9, 3.1, 5.4, 2.1]
-])
-
-
-
-for i, logits in enumerate(parameters):
-  class_idx = tf.argmax(logits).numpy()
-  p = tf.nn.softmax(logits)[class_idx]
-  name = Y_test_orig[class_idx]
-  print("Example {} prediction: {} ({:4.1f}%)".format(i, name, 100*p))
-
-
-Xnew = array([[0.00000925,	0.000023,	0.0000217,	0.0000198,	0.0000186,	0.00000408,	0.0000209]])
-# make a prediction
-ynew = model.predict_proba(Xnew)
-# show the inputs and predicted outputs
-print("X=%s, Predicted=%s" % (Xnew[0], ynew[0]))
-#ESTIMATION 
-"""
-#%%
-#new = array([[0.89337759, 0.65864154]])
-#prediction = sess.run([[0.00000115, 0.00000124, 0.00000149, 0.0000013, 0.00000231, 0.00000127, 0.00000117]])
-#model.predict.generator([[0.00000115, 0.00000124, 0.00000149, 0.0000013, 0.00000231, 0.00000127, 0.00000117]])
-#print("\n\n Predicted label is :\n", prediction)
-#print(tf.estimator.EstimatorSpec([[0.00000115, 0.00000124, 0.00000149, 0.0000013, 0.00000231, 0.00000127, 0.00000117]]))    
-
-# # Obtain the accuracies per each class
-"""
-# ## Training Set
-Z4_train = forward_propagation_with_numpy(X_train, parameters)
-
-a = tf.placeholder(tf.float32,shape = [X_train.shape[1],])
-b = tf.placeholder(tf.float32,shape = [X_train.shape[1],])
-
-print("Shapes: ", X_train.shape[1], Z4_train.shape)
-
-c = tf.confusion_matrix(labels = a, predictions = b)
-
-with tf.Session() as sess:
-    confusion_matrix = c.eval(feed_dict={a:sess.run(tf.argmax(Y_train)),b:sess.run(tf.argmax(Z4_train))})
-    print("The confusion matrix for training data is:\n")
-    print(np.true_divide(confusion_matrix.diagonal(), np.sum(confusion_matrix, axis = 0)))
-
-
-# ## Test Set
-
-Z4_test = forward_propagation_with_numpy(X_test, parameters)
-
-a = tf.placeholder(tf.float32,shape = [X_test.shape[1],])
-b = tf.placeholder(tf.float32,shape = [X_test.shape[1],])
-
-c = tf.confusion_matrix(labels = a, predictions = b)
-
-with tf.Session() as sess:
-    confusion_matrix = c.eval(feed_dict={a:sess.run(tf.argmax(Y_test)),b:sess.run(tf.argmax(Z4_test))})
-    print(confusion_matrix)
-    print("The confusion matrix for test data is:\n")    
-    print(np.true_divide(confusion_matrix.diagonal(), np.sum(confusion_matrix, axis = 0)))
-
-"""
