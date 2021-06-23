@@ -21,9 +21,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
 from sklearn.model_selection import cross_val_score
 
-
-
 py3nvml.grab_gpus(num_gpus=1, gpu_select=[0])
+
+#%%  
+#Load the emg data
 
 target=pd.read_csv(r'C:\PhD\.csv', header=None, sep=',')
 features=pd.read_csv(r'C:\PhD\DB of Module\Alvaro.csv', header=None, sep=',')
@@ -35,9 +36,6 @@ target = target.iloc[:, 0].values
 features = features.iloc[:, :].values
 
 X_train_orig, X_test_orig, Y_train_orig, Y_test_orig = train_test_split(features, target, test_size = 0.20, random_state = None)
-
-#%%  
-#Load the emg data
 
 
 X_train_orig=X_train_orig.T
